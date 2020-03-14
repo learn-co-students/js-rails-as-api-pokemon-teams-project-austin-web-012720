@@ -91,7 +91,7 @@ function addPokemon(event) {
     
     const trainerDiv = document.querySelectorAll(`div[data-trainer-id="${trainerId}"]`);
     const ul = document.querySelector(`ul[data-trainer-id="${trainerId}"]`);
-    console.log(ul);
+    console.log(ul.children.length);
 
     const body = {
         trainer_id: trainerId
@@ -110,23 +110,28 @@ function addPokemon(event) {
     fetch(`${POKEMONS_URL}`, configObj)
     .then(resp => resp.json())
     .then(json => {
-        console.log(json);
+        // console.log(json);
+        if (ul.children.length < 7) {
+            const nickname = json['nickname'];
+            const id = json['id'];
+            // console.log(nickname);
 
-        const nickname = json['nickname'];
-        const id = json['id'];
-        // console.log(nickname);
+            const li = document.createElement('li');
+            li.innerText = nickname;
 
-        const li = document.createElement('li');
-        li.innerText = nickname;
+            const button = document.createElement('button');
+            button.className = "release";
+            button.dataset.pokemonId = id;
+            button.addEventListener("click", removePokemon);
+            li.appendChild(button);
 
-        const button = document.createElement('button');
-        button.className = "release";
-        button.dataset.pokemonId = id;
-        button.addEventListener("click", removePokemon);
-        li.appendChild(button);
-
-        ul.appendChild(li);
-    })
+            ul.appendChild(li);
+        }
+    }).catch(error => {
+        alert("Party is full!");
+        console.log(error.message);
+        
+    });
 }
 
 
