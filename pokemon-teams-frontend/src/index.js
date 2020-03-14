@@ -19,7 +19,6 @@ document.addEventListener('DOMContentLoaded', () => {
             for(const trainer in json) {
                 const name = json[trainer].name;
                 let id = json[trainer].id;
-                // console.log(id);
     
                 const div = document.createElement('div');
                 div.dataset.id = id;
@@ -34,20 +33,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 button.innerText = "Add Pokemon";
                 button.addEventListener("click", addPokemon);
                 div.appendChild(button);
-                // console.log(button);
     
-                // console.log(id);
                 fetch(`${TRAINERS_URL}/${id}`)
                 .then(resp => resp.json())
                 .then(json => {
-                    // console.log(json);
+                    
                     const ul = document.createElement('ul');
                     ul.dataset.trainerId = id;
 
                     for(const pokemon in json) {
                         const nickname = json[pokemon].nickname;
                         const id = json[pokemon].id;
-                        // console.log(id);
 
                         const li = document.createElement('li');
                         li.innerText = nickname;
@@ -62,7 +58,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                     div.appendChild(ul);
                 })
-                // getPokemons(id);
     
                 main.appendChild(div);
             }
@@ -114,7 +109,6 @@ function addPokemon(event) {
         if (ul.children.length < 7) {
             const nickname = json['nickname'];
             const id = json['id'];
-            // console.log(nickname);
 
             const li = document.createElement('li');
             li.innerText = nickname;
